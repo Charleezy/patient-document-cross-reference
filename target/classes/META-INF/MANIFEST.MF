@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: patient-document-cross-reference
+Implementation-Version: 0.1.0
+Built-By: obese
+Implementation-Vendor-Id: org.springframework
+Build-Jdk: 1.8.0_121
+Implementation-URL: http://projects.spring.io/spring-boot/patient-docu
+ ment-cross-reference/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
