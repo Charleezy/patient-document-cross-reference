@@ -9,7 +9,8 @@ public class IdentificationDocumentService {
 	@Autowired
 	IdentificationDocumentRepository idRepository;
 	
-	public void addDocument(IdentificationDocument identificationDocument){
-		idRepository.save(identificationDocument);
+	public long addDocument(IdentificationDocument identificationDocument){
+		IdentificationDocument identificationDocumentSaved = idRepository.save(identificationDocument);
+		return identificationDocumentSaved.getIdentificationDocumentID();
 	}
 }

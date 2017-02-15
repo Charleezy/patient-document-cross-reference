@@ -47,9 +47,9 @@ public class ApplicationTest {
     @Test
 	public void shouldCreateEntity() throws Exception {
 
-		mockMvc.perform(post("/addDocument").param("identificationDocument", "1")).andExpect(
+		mockMvc.perform(post("/addDocument").param("issuer", "Government of Canada").param("id", "Qazxc123")).andExpect(
 						status().isCreated()).andExpect(
-								header().string("Location", containsString("identificationDocument/")));
+								header().string("Location", containsString("getDocument/")));
 	}
 
 }

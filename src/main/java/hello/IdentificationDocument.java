@@ -20,6 +20,10 @@ public class IdentificationDocument {
 		this.id = id;
 	}
 
+	public long getIdentificationDocumentID(){
+		return identificationDocumentID;
+	}
+	
 	public String getIssuer() {
 		return issuer;
 	}
