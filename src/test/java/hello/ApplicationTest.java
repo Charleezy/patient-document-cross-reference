@@ -20,6 +20,8 @@ import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,5 +43,13 @@ public class ApplicationTest {
     public void addDocumentWithIdentification() throws Exception{
     	mockMvc.perform(post("/addDocument").param("identificationDocument", "1")).andExpect(content().string(containsString("Hello, 1!")));
     }
+    
+    @Test
+	public void shouldCreateEntity() throws Exception {
+
+		mockMvc.perform(post("/addDocument").param("identificationDocument", "1")).andExpect(
+						status().isCreated()).andExpect(
+								header().string("Location", containsString("identificationDocument/")));
+	}
 
 }
