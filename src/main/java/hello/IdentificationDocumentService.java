@@ -9,7 +9,7 @@ public class IdentificationDocumentService {
 	@Autowired
 	IdentificationDocumentRepository idRepository;
 	
-	public void addDocument(){
-//		idRepository.save(new IdentificationDocument())
+	public void addDocument(IdentificationDocument identificationDocument){
+		idRepository.save(identificationDocument);
 	}
 }

@@ -15,9 +15,8 @@ public class DocumentController {
 	IdentificationDocumentService idService;
 	
 	@RequestMapping("/addDocument")
-    public ResponseEntity addDocument(@RequestParam(value="issuer", required=true) String issuer, @RequestParam(value="id", required=true) String id, Model model) {
-        model.addAttribute("name", issuer);
-//        return "greeting";
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity addDocument(@RequestParam(value="issuer", required=true) String issuer, @RequestParam(value="id", required=true) String id) {
+        idService.addDocument(new IdentificationDocument(issuer, id));
+		return new ResponseEntity(HttpStatus.CREATED);
     }
 }
