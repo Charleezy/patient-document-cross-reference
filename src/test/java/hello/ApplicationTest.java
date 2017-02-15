@@ -41,7 +41,7 @@ public class ApplicationTest {
     
     @Test
     public void addDocumentWithIdentification() throws Exception{
-    	mockMvc.perform(post("/addDocument").param("identificationDocument", "1")).andExpect(content().string(containsString("Hello, 1!")));
+    	mockMvc.perform(post("/addDocument").param("issuer", "Government of Canada").param("id", "Qazxc123")).andExpect(status().isCreated());
     }
     
     @Test

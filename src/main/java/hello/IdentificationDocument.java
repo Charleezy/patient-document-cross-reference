@@ -13,7 +13,12 @@ public class IdentificationDocument {
 	private long identificationDocumentID;
 
 	private String issuer;
-	private String ID;
+	private String id;
+	
+	public IdentificationDocument(String issuer, String id){
+		this.issuer = issuer;
+		this.id = id;
+	}
 
 	public String getIssuer() {
 		return issuer;
@@ -24,10 +29,10 @@ public class IdentificationDocument {
 	}
 
 	public String getID() {
-		return ID;
+		return id;
 	}
 
-	public void setID(String ID) {
-		this.ID = ID;
+	public void setID(String id) {
+		this.id = id;
 	}
 }
