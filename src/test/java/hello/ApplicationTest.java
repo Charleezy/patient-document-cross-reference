@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,31 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ApplicationTest {
 
-    @Autowired
+//    @Autowired
     private MockMvc mockMvc;
+    
+    @Mock
+    private IdentificationDocumentService idService;
+    
+    @InjectMocks
+    private DocumentController documentController;
+    
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(documentController).build();
+    }
     
     @Test
     public void addDocumentWithIdentification() throws Exception{
@@ -59,7 +77,6 @@ public class ApplicationTest {
 		mockMvc.perform(post("/linkDocument").param("existingDocumentID", "1").param("newDocumentID", "2")).andExpect(
 						status().isOk()).andExpect(
 								content().string(containsString("document 1 linked to document 2")));
+		Mockito.verify(idService).linkDocuments(1, 2);
 	}
-
-    //Should not link if documents already in linked list
 }

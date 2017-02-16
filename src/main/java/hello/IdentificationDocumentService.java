@@ -13,4 +13,8 @@ public class IdentificationDocumentService {
 		IdentificationDocument identificationDocumentSaved = idRepository.save(identificationDocument);
 		return identificationDocumentSaved.getIdentificationDocumentID();
 	}
+	
+	public void linkDocuments(long existingDocumentID, long newDocumentID){
+		
+	}
 }
