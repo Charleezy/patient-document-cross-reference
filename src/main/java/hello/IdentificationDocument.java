@@ -21,6 +21,9 @@ public class IdentificationDocument {
 		this.id = id;
 	}
 
+	/**
+	 * This ID is the unique identifier in the database
+	 */
 	public long getIdentificationDocumentID(){
 		return identificationDocumentID;
 	}
@@ -33,6 +36,9 @@ public class IdentificationDocument {
 		this.issuer = issuer;
 	}
 
+	/**
+	 * This is something like a passport number
+	 */
 	public String getID() {
 		return id;
 	}
