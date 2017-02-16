@@ -17,7 +17,7 @@ public class IdentificationDocumentService {
 	public void linkDocuments(long existingDocumentID, long newDocumentID){
 		IdentificationDocument existingID = idRepository.findOne(existingDocumentID);
 		IdentificationDocument newID = idRepository.findOne(newDocumentID);
-	
+		
 		existingID.setNextLinkedIdentificationDocumentID(newID.getIdentificationDocumentID());
 		
 		idRepository.save(existingID);
