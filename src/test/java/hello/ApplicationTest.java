@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -51,5 +52,14 @@ public class ApplicationTest {
 						status().isCreated()).andExpect(
 								header().string("Location", containsString("getDocument/")));
 	}
+    
+    @Test
+	public void shouldLinkEntity() throws Exception {
 
+		mockMvc.perform(post("/linkDocument").param("existingDocumentID", "1").param("newDocumentID", "2")).andExpect(
+						status().isOk()).andExpect(
+								content().string(containsString("document 1 linked to document 2")));
+	}
+
+    //Should not link if documents already in linked list
 }

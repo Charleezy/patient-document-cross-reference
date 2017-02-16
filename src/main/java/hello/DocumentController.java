@@ -21,4 +21,10 @@ public class DocumentController {
 		ResponseEntity response = ResponseEntity.status(HttpStatus.CREATED).header("Location", "/getDocument/" + documentID).build();
 		return response;
     }
+	
+	@RequestMapping("/linkDocument")
+    public ResponseEntity linkDocument(@RequestParam(value="existingDocumentID", required=true) long existingDocumentID, @RequestParam(value="newDocumentID", required=true) long newDocumentID) {
+		ResponseEntity response = ResponseEntity.status(HttpStatus.OK).body("document " + existingDocumentID + " linked to document " + newDocumentID);
+		return response;
+    }
 }
