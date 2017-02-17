@@ -54,6 +54,19 @@ public class IdentificationDocumentServiceTest {
 		identificationDocumentService.linkDocuments(2, 1);
 	}
 	
+	@Test(expected=Exception.class)
+	public void linkListShouldAlwaysAddToEndOfList() throws Exception{
+		IdentificationDocument mockIdentificationDocument1 = new IdentificationDocument("Government of Canada", "QAZXC123");
+		IdentificationDocument mockIdentificationDocument2 = new IdentificationDocument("Government of Canada", "QAZXC123");
+		IdentificationDocument mockIdentificationDocument3 = new IdentificationDocument("Government of Canada", "QAZXC123");
+		Mockito.when(identificationDocumentRepository.findOne(1L)).thenReturn(mockIdentificationDocument1);
+		Mockito.when(identificationDocumentRepository.findOne(2L)).thenReturn(mockIdentificationDocument2);
+		Mockito.when(identificationDocumentRepository.findOne(3L)).thenReturn(mockIdentificationDocument3);
+		identificationDocumentService.linkDocuments(1, 2);
+		identificationDocumentService.linkDocuments(1, 3);
+		identificationDocumentService.linkDocuments(1, 2);
+	}
+	
 	@Test
 	public void isAlreadyLinkedFalseIfNotLinked(){
 		IdentificationDocument mockIdentificationDocument1 = new IdentificationDocument("Government of Canada", "QAZXC123");

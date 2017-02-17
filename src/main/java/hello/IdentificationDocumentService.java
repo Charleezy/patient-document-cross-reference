@@ -20,30 +20,28 @@ public class IdentificationDocumentService {
 		IdentificationDocument existingID = idRepository.findOne(existingDocumentID);
 		IdentificationDocument newID = idRepository.findOne(newDocumentID);
 		
-		isAlreadyLinked(existingID, newID);
-		
-		existingID.setNextLinkedIdentificationDocumentID(newID.getIdentificationDocumentID());
-		existingID.setHeadIdentificationDocumentID(existingDocumentID);
-		newID.setHeadIdentificationDocumentID(existingDocumentID);
-		
-		idRepository.save(existingID);
+		if(!isAlreadyLinked(existingID, newID)){
+			existingID.setNextLinkedIdentificationDocumentID(newID.getIdentificationDocumentID());
+			existingID.setHeadIdentificationDocumentID(existingDocumentID);
+			newID.setHeadIdentificationDocumentID(existingDocumentID);
+			
+			idRepository.save(existingID);
+		}else{
+			throw new Exception("document " + existingDocumentID + " already linked to document " + newDocumentID);
+		}
 	}
 
 	public boolean isAlreadyLinked(IdentificationDocument existingID, IdentificationDocument newID) {
-		IdentificationDocument currentID = idRepository.findOne(existingID.getHeadIdentificationDocumentID());
-		while(currentID.getNextLinkedIdentificationDocumentID() != 0){
-			if(currentID.getIdentificationDocumentID() == newID.getIdentificationDocumentID()){
-				return true;
-			}else{
-				currentID = idRepository.findOne(currentID.getNextLinkedIdentificationDocumentID());
-			}
+		if(existingID.getHeadIdentificationDocumentID() == 0){
+			return false;
+		}else if(existingID.getHeadIdentificationDocumentID() == newID.getHeadIdentificationDocumentID()){
+			return true;
+		}else{
+			return false;
 		}
-		return false;
 	}
 
 	public List<IdentificationDocument> getLinkedDocuments(long existingDocumentID) {
 		return null;
-		// TODO Auto-generated method stub
-		
 	}
 }
