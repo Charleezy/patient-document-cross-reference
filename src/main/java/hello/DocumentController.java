@@ -1,5 +1,8 @@
 package hello;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +37,12 @@ public class DocumentController {
 		return response;
     }
 	
-	
+	@RequestMapping("/getDocuments")
+    public ResponseEntity getDocuments(@RequestParam(value="existingDocumentID", required=true) long existingDocumentID) {
+		ResponseEntity response;
+		List<IdentificationDocument> linkedDocumentsList = idService.getLinkedDocuments(existingDocumentID);
+		String linkedDocumentsString = linkedDocumentsList.stream().map(ld -> ld.getIssuer() + ld.getID()).collect(Collectors.joining(", "));
+		response = ResponseEntity.status(HttpStatus.OK).body("patient documents: " + linkedDocumentsString);
+		return response;
+    }
 }

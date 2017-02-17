@@ -1,5 +1,7 @@
 package hello;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +31,8 @@ public class IdentificationDocumentService {
 		idRepository.save(newID);
 	}
 
-	public void getLinkedDocuments(int i) {
+	public List<IdentificationDocument> getLinkedDocuments(long existingDocumentID) {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}

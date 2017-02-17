@@ -84,8 +84,8 @@ public class ApplicationTest {
     
     @Test
 	public void shouldRetrieveDocuments() throws Exception {
-    	mockMvc.perform(get("/getPatientDocuments").param("identificationDocumentID", "1")).andExpect(
-						status().isOk()).andExpect(content().string(containsString("the following documents are linked: ")));
+    	mockMvc.perform(get("/getDocuments").param("identificationDocumentID", "1")).andExpect(
+						status().isOk()).andExpect(content().string(containsString("patient documents: ")));
 
 		Mockito.verify(idService).getLinkedDocuments(1);
     }
