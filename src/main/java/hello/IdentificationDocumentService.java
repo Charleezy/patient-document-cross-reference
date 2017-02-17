@@ -18,8 +18,11 @@ public class IdentificationDocumentService {
 		IdentificationDocument existingID = idRepository.findOne(existingDocumentID);
 		IdentificationDocument newID = idRepository.findOne(newDocumentID);
 		
-		existingID.setNextLinkedIdentificationDocumentID(newID.getIdentificationDocumentID());
+		
+		existingID.linkDocument(newDocumentID);
+		newID.linkDocument(existingDocumentID);
 		
 		idRepository.save(existingID);
+		idRepository.save(newID);
 	}
 }

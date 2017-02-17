@@ -1,5 +1,8 @@
 package hello;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +17,7 @@ public class IdentificationDocument {
 
 	private String issuer;
 	private String id;
-	private long nextLinkedIdentificationDocumentID;
+	private List<Long> listLinkedID = new ArrayList<Long>();
 
 	public IdentificationDocument(String issuer, String id){
 		this.issuer = issuer;
@@ -46,12 +49,8 @@ public class IdentificationDocument {
 	public void setID(String id) {
 		this.id = id;
 	}
-	
-	public long getNextLinkedIdentificationDocumentID() {
-		return nextLinkedIdentificationDocumentID;
-	}
 
-	public void setNextLinkedIdentificationDocumentID(long nextLinkedIdentificationDocumentID) {
-		this.nextLinkedIdentificationDocumentID = nextLinkedIdentificationDocumentID;
+	public void linkDocument(Long identificationDocumentID2) {
+		listLinkedID.add(identificationDocumentID2);
 	}
 }

@@ -37,14 +37,13 @@ public class IdentificationDocumentServiceTest {
 		Mockito.when(identificationDocumentRepository.findOne(2L)).thenReturn(mockIdentificationDocument2);
 		identificationDocumentService.linkDocuments(1, 2);
 		
-		mockIdentificationDocument1.setNextLinkedIdentificationDocumentID(mockIdentificationDocument2.getIdentificationDocumentID());
-		
 		Mockito.verify(identificationDocumentRepository).save(mockIdentificationDocument1);
+		Mockito.verify(identificationDocumentRepository).save(mockIdentificationDocument2);
 	}
 	
     //Should not link if documents already in linked list
 	//TODO
-	@Ignore
+//	@Ignore
 	@Test(expected=Exception.class)
 	public void shouldNotLinkDocumentsIfAlreadyLinked(){
 		IdentificationDocument mockIdentificationDocument1 = new IdentificationDocument("Government of Canada", "QAZXC123");
@@ -53,7 +52,7 @@ public class IdentificationDocumentServiceTest {
 		Mockito.when(identificationDocumentRepository.findOne(2L)).thenReturn(mockIdentificationDocument2);
 		identificationDocumentService.linkDocuments(1, 2);
 		
-		mockIdentificationDocument1.setNextLinkedIdentificationDocumentID(mockIdentificationDocument2.getIdentificationDocumentID());
+//		mockIdentificationDocument1.setNextLinkedIdentificationDocumentID(mockIdentificationDocument2.getIdentificationDocumentID());
 		
 		identificationDocumentService.linkDocuments(2, 1);
 	}
