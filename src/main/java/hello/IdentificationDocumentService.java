@@ -1,5 +1,6 @@
 package hello;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,13 @@ public class IdentificationDocumentService {
 	}
 
 	public List<IdentificationDocument> getLinkedDocuments(long existingDocumentID) {
-		return null;
+		List<IdentificationDocument> identificationDocuments = new ArrayList<IdentificationDocument>();
+		IdentificationDocument curID = idRepository.findOne(existingDocumentID);
+		while(curID.getNextLinkedIdentificationDocumentID() != 0){
+			identificationDocuments.add(curID);
+			curID = idRepository.findOne(curID.getNextLinkedIdentificationDocumentID());
+		}
+		identificationDocuments.add(curID);
+		return identificationDocuments;
 	}
 }

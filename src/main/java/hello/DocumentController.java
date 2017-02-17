@@ -41,7 +41,7 @@ public class DocumentController {
     public ResponseEntity getDocuments(@RequestParam(value="existingDocumentID", required=true) long existingDocumentID) {
 		ResponseEntity response;
 		List<IdentificationDocument> linkedDocumentsList = idService.getLinkedDocuments(existingDocumentID);
-		String linkedDocumentsString = linkedDocumentsList.stream().map(ld -> ld.getIssuer() + ld.getID()).collect(Collectors.joining(", "));
+		String linkedDocumentsString = linkedDocumentsList.stream().map(ld -> "issuer: " + ld.getIssuer() + " ID: " + ld.getID()).collect(Collectors.joining(", "));
 		response = ResponseEntity.status(HttpStatus.OK).body("patient documents: " + linkedDocumentsString);
 		return response;
     }

@@ -67,6 +67,9 @@ public class IdentificationDocumentServiceTest {
 		identificationDocumentService.linkDocuments(1, 2);
 	}
 	
+	//TODO: test for linking multiple lists of patient documents
+	//TODO: test for linking 3 or more documents
+	
 	@Test
 	public void isAlreadyLinkedFalseIfNotLinked(){
 		IdentificationDocument mockIdentificationDocument1 = new IdentificationDocument("Government of Canada", "QAZXC123");
@@ -91,5 +94,22 @@ public class IdentificationDocumentServiceTest {
 		mockIdentificationDocument1.setNextLinkedIdentificationDocumentID(2);
 		
 		Assert.assertTrue(identificationDocumentService.isAlreadyLinked(mockIdentificationDocument1, mockIdentificationDocument2));
+	}
+	
+	@Test
+	public void shouldGetLinkedDocuments() throws Exception{
+		IdentificationDocument mockIdentificationDocument1 = new IdentificationDocument("Government of Canada", "QAZXC123");
+		IdentificationDocument mockIdentificationDocument2 = new IdentificationDocument("Government of Canada", "QAZXC123");
+		Mockito.when(identificationDocumentRepository.findOne(1L)).thenReturn(mockIdentificationDocument1);
+		Mockito.when(identificationDocumentRepository.findOne(2L)).thenReturn(mockIdentificationDocument2);
+		
+		mockIdentificationDocument1.setHeadIdentificationDocumentID(1);
+		mockIdentificationDocument2.setHeadIdentificationDocumentID(1);
+		mockIdentificationDocument1.setNextLinkedIdentificationDocumentID(2);
+		
+		identificationDocumentService.getLinkedDocuments(1L);
+		
+		Mockito.verify(identificationDocumentRepository).findOne(1L);
+		Mockito.verify(identificationDocumentRepository).findOne(2L);
 	}
 }

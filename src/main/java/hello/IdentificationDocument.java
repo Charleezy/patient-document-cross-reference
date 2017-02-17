@@ -21,6 +21,9 @@ public class IdentificationDocument {
 	private long nextLinkedIdentificationDocumentID;
 	private long headIdentificationDocumentID;
 
+	public IdentificationDocument(){
+	}
+	
 	public IdentificationDocument(String issuer, String id){
 		this.issuer = issuer;
 		this.id = id;
