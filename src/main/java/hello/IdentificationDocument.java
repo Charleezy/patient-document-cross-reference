@@ -18,7 +18,8 @@ public class IdentificationDocument {
 
 	private String issuer;
 	private String id;
-	private List<Long> listLinkedID = new ArrayList<Long>();
+	private long nextLinkedIdentificationDocumentID;
+	private long headIdentificationDocumentID;
 
 	public IdentificationDocument(String issuer, String id){
 		this.issuer = issuer;
@@ -51,11 +52,19 @@ public class IdentificationDocument {
 		this.id = id;
 	}
 
-	public void linkDocument(Long identificationDocumentID2) {
-		listLinkedID.add(identificationDocumentID2);
+	public long getNextLinkedIdentificationDocumentID() {
+		return nextLinkedIdentificationDocumentID;
+	}
+
+	public void setNextLinkedIdentificationDocumentID(long nextLinkedIdentificationDocumentID) {
+		this.nextLinkedIdentificationDocumentID = nextLinkedIdentificationDocumentID;
 	}
 	
-	public List<Long> getLinkedDocuments(){
-		return listLinkedID;
+	public long getHeadIdentificationDocumentID() {
+		return headIdentificationDocumentID;
+	}
+
+	public void setHeadIdentificationDocumentID(long headIdentificationDocumentID) {
+		this.headIdentificationDocumentID = headIdentificationDocumentID;
 	}
 }

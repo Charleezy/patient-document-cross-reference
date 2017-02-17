@@ -20,15 +20,25 @@ public class IdentificationDocumentService {
 		IdentificationDocument existingID = idRepository.findOne(existingDocumentID);
 		IdentificationDocument newID = idRepository.findOne(newDocumentID);
 		
-		if(existingID.getLinkedDocuments().stream().anyMatch(ld -> ld.equals(newDocumentID))){
-			throw new Exception();
-		}
+		isAlreadyLinked(existingID, newID);
 		
-		existingID.linkDocument(newDocumentID);
-		newID.linkDocument(existingDocumentID);
+		existingID.setNextLinkedIdentificationDocumentID(newID.getIdentificationDocumentID());
+		existingID.setHeadIdentificationDocumentID(existingDocumentID);
+		newID.setHeadIdentificationDocumentID(existingDocumentID);
 		
 		idRepository.save(existingID);
-		idRepository.save(newID);
+	}
+
+	public boolean isAlreadyLinked(IdentificationDocument existingID, IdentificationDocument newID) {
+		IdentificationDocument currentID = idRepository.findOne(existingID.getHeadIdentificationDocumentID());
+		while(currentID.getNextLinkedIdentificationDocumentID() != 0){
+			if(currentID.getIdentificationDocumentID() == newID.getIdentificationDocumentID()){
+				return true;
+			}else{
+				currentID = idRepository.findOne(currentID.getNextLinkedIdentificationDocumentID());
+			}
+		}
+		return false;
 	}
 
 	public List<IdentificationDocument> getLinkedDocuments(long existingDocumentID) {

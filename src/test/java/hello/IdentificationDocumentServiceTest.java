@@ -9,6 +9,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import org.junit.Assert;
+
 public class IdentificationDocumentServiceTest {
 	@Mock
 	IdentificationDocumentRepository identificationDocumentRepository;
@@ -35,15 +37,12 @@ public class IdentificationDocumentServiceTest {
 		IdentificationDocument mockIdentificationDocument2 = new IdentificationDocument("Government of Canada", "QAZXC123");
 		Mockito.when(identificationDocumentRepository.findOne(1L)).thenReturn(mockIdentificationDocument1);
 		Mockito.when(identificationDocumentRepository.findOne(2L)).thenReturn(mockIdentificationDocument2);
+		mockIdentificationDocument1.setHeadIdentificationDocumentID(1);
 		identificationDocumentService.linkDocuments(1, 2);
 		
 		Mockito.verify(identificationDocumentRepository).save(mockIdentificationDocument1);
-		Mockito.verify(identificationDocumentRepository).save(mockIdentificationDocument2);
 	}
 	
-    //Should not link if documents already in linked list
-	//TODO
-//	@Ignore
 	@Test(expected=Exception.class)
 	public void shouldNotLinkDocumentsIfAlreadyLinked() throws Exception{
 		IdentificationDocument mockIdentificationDocument1 = new IdentificationDocument("Government of Canada", "QAZXC123");
@@ -52,8 +51,32 @@ public class IdentificationDocumentServiceTest {
 		Mockito.when(identificationDocumentRepository.findOne(2L)).thenReturn(mockIdentificationDocument2);
 		identificationDocumentService.linkDocuments(1, 2);
 		
-//		mockIdentificationDocument1.setNextLinkedIdentificationDocumentID(mockIdentificationDocument2.getIdentificationDocumentID());
-		
 		identificationDocumentService.linkDocuments(2, 1);
+	}
+	
+	@Test
+	public void isAlreadyLinkedFalseIfNotLinked(){
+		IdentificationDocument mockIdentificationDocument1 = new IdentificationDocument("Government of Canada", "QAZXC123");
+		IdentificationDocument mockIdentificationDocument2 = new IdentificationDocument("Government of Canada", "QAZXC123");
+		Mockito.when(identificationDocumentRepository.findOne(1L)).thenReturn(mockIdentificationDocument1);
+		Mockito.when(identificationDocumentRepository.findOne(2L)).thenReturn(mockIdentificationDocument2);
+		
+		mockIdentificationDocument1.setHeadIdentificationDocumentID(1);
+		
+		Assert.assertFalse(identificationDocumentService.isAlreadyLinked(mockIdentificationDocument1, mockIdentificationDocument2));
+	}
+	
+	@Test
+	public void isAlreadyLinkedTrueIfLinked(){
+		IdentificationDocument mockIdentificationDocument1 = new IdentificationDocument("Government of Canada", "QAZXC123");
+		IdentificationDocument mockIdentificationDocument2 = new IdentificationDocument("Government of Canada", "QAZXC123");
+		Mockito.when(identificationDocumentRepository.findOne(1L)).thenReturn(mockIdentificationDocument1);
+		Mockito.when(identificationDocumentRepository.findOne(2L)).thenReturn(mockIdentificationDocument2);
+		
+		mockIdentificationDocument1.setHeadIdentificationDocumentID(1);
+		mockIdentificationDocument2.setHeadIdentificationDocumentID(1);
+		mockIdentificationDocument1.setNextLinkedIdentificationDocumentID(2);
+		
+		Assert.assertTrue(identificationDocumentService.isAlreadyLinked(mockIdentificationDocument1, mockIdentificationDocument2));
 	}
 }
