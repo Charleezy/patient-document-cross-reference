@@ -14,10 +14,13 @@ public class IdentificationDocumentService {
 		return identificationDocumentSaved.getIdentificationDocumentID();
 	}
 	
-	public void linkDocuments(long existingDocumentID, long newDocumentID){
+	public void linkDocuments(long existingDocumentID, long newDocumentID) throws Exception{
 		IdentificationDocument existingID = idRepository.findOne(existingDocumentID);
 		IdentificationDocument newID = idRepository.findOne(newDocumentID);
 		
+		if(existingID.getLinkedDocuments().stream().anyMatch(ld -> ld.equals(newDocumentID))){
+			throw new Exception();
+		}
 		
 		existingID.linkDocument(newDocumentID);
 		newID.linkDocument(existingDocumentID);

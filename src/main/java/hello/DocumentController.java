@@ -24,8 +24,13 @@ public class DocumentController {
 	
 	@RequestMapping("/linkDocument")
     public ResponseEntity linkDocument(@RequestParam(value="existingDocumentID", required=true) long existingDocumentID, @RequestParam(value="newDocumentID", required=true) long newDocumentID) {
-		ResponseEntity response = ResponseEntity.status(HttpStatus.OK).body("document " + existingDocumentID + " linked to document " + newDocumentID);
-		idService.linkDocuments(existingDocumentID, newDocumentID);
+		ResponseEntity response;
+		try {
+			idService.linkDocuments(existingDocumentID, newDocumentID);
+			response = ResponseEntity.status(HttpStatus.OK).body("document " + existingDocumentID + " linked to document " + newDocumentID);
+		} catch (Exception e) {
+			response = ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("document " + existingDocumentID + " already linked to document " + newDocumentID);
+		}
 		return response;
     }
 }

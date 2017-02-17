@@ -30,7 +30,7 @@ public class IdentificationDocumentServiceTest {
 	}
 	
 	@Test
-	public void shouldLinkDocuments(){
+	public void shouldLinkDocuments() throws Exception{
 		IdentificationDocument mockIdentificationDocument1 = new IdentificationDocument("Government of Canada", "QAZXC123");
 		IdentificationDocument mockIdentificationDocument2 = new IdentificationDocument("Government of Canada", "QAZXC123");
 		Mockito.when(identificationDocumentRepository.findOne(1L)).thenReturn(mockIdentificationDocument1);
@@ -45,7 +45,7 @@ public class IdentificationDocumentServiceTest {
 	//TODO
 //	@Ignore
 	@Test(expected=Exception.class)
-	public void shouldNotLinkDocumentsIfAlreadyLinked(){
+	public void shouldNotLinkDocumentsIfAlreadyLinked() throws Exception{
 		IdentificationDocument mockIdentificationDocument1 = new IdentificationDocument("Government of Canada", "QAZXC123");
 		IdentificationDocument mockIdentificationDocument2 = new IdentificationDocument("Government of Canada", "QAZXC123");
 		Mockito.when(identificationDocumentRepository.findOne(1L)).thenReturn(mockIdentificationDocument1);

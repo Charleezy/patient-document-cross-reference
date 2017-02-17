@@ -53,4 +53,8 @@ public class IdentificationDocument {
 	public void linkDocument(Long identificationDocumentID2) {
 		listLinkedID.add(identificationDocumentID2);
 	}
+	
+	public List<Long> getLinkedDocuments(){
+		return listLinkedID;
+	}
 }
