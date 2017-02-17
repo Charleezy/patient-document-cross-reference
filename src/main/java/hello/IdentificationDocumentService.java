@@ -14,6 +14,9 @@ public class IdentificationDocumentService {
 	
 	public long addDocument(IdentificationDocument identificationDocument){
 		IdentificationDocument identificationDocumentSaved = idRepository.save(identificationDocument);
+		//Must store head as current document in order to help link demographic to document
+		identificationDocumentSaved.setHeadIdentificationDocumentID(identificationDocumentSaved.getIdentificationDocumentID());
+		idRepository.save(identificationDocumentSaved);
 		return identificationDocumentSaved.getIdentificationDocumentID();
 	}
 	

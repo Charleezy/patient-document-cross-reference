@@ -28,6 +28,13 @@ public class IdentificationDocument {
 		this.issuer = issuer;
 		this.id = id;
 	}
+	
+	/**
+	 * Strictly for tests
+	 */
+	public void setIdentificationDocumentID(long identificationDocumentID) {
+		this.identificationDocumentID = identificationDocumentID;
+	}
 
 	/**
 	 * This ID is the unique identifier in the database

@@ -15,3 +15,9 @@ existingDocumentID "1"
 localhost:8080/linkDocument
 existingDocumentID "1"
 existingDocumentID "2"
+
+#To run with maveni
+./mvnw spring-boot:run
+
+Or build the jar
+./mvnw clean package
