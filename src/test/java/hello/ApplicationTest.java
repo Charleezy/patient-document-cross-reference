@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,6 +33,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -72,11 +74,19 @@ public class ApplicationTest {
 	}
     
     @Test
-	public void shouldLinkEntity() throws Exception {
+	public void shouldLinkDocuments() throws Exception {
 
 		mockMvc.perform(post("/linkDocument").param("existingDocumentID", "1").param("newDocumentID", "2")).andExpect(
 						status().isOk()).andExpect(
 								content().string(containsString("document 1 linked to document 2")));
 		Mockito.verify(idService).linkDocuments(1, 2);
 	}
+    
+    @Test
+	public void shouldRetrieveDocuments() throws Exception {
+    	mockMvc.perform(get("/getPatientDocuments").param("identificationDocumentID", "1")).andExpect(
+						status().isOk()).andExpect(content().string(containsString("the following documents are linked: ")));
+
+		Mockito.verify(idService).getLinkedDocuments(1);
+    }
 }

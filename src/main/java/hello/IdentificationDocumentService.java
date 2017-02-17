@@ -28,4 +28,9 @@ public class IdentificationDocumentService {
 		idRepository.save(existingID);
 		idRepository.save(newID);
 	}
+
+	public void getLinkedDocuments(int i) {
+		// TODO Auto-generated method stub
+		
+	}
 }
