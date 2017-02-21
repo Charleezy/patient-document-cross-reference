@@ -29,7 +29,7 @@ public class IdentificationDocumentServiceTest {
 		mockIdentificationDocument.setIdentificationDocumentID(1L);
 		Mockito.when(identificationDocumentRepository.save(mockIdentificationDocument)).thenReturn(mockIdentificationDocument);
 		identificationDocumentService.addDocument(mockIdentificationDocument);
-		Mockito.verify(identificationDocumentRepository).save(mockIdentificationDocument);
+		Mockito.verify(identificationDocumentRepository, Mockito.times(2)).save(mockIdentificationDocument);
 	}
 	
 	@Test

@@ -7,16 +7,20 @@ localhost:8080/addDocument
 issuer "government of canada"
 id "Qazzxc123"
 
-- post
+gives back the id of the created document
+
+- getting documents
 localhost:8080/getDocuments
 existingDocumentID "1"
 
-- post
+- linking documents
 localhost:8080/linkDocument
 existingDocumentID "1"
-existingDocumentID "2"
+newDocumentID "2"
 
-#To run with maveni
+#To run with maven
+Set up a MySQL database with the parameters specified in application.properties
+
 ./mvnw spring-boot:run
 
 Or build the jar
